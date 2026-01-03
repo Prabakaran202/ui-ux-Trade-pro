@@ -2,7 +2,7 @@
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, Legend
 } from "recharts";
-import MultiAssetChart from "../../components/MultiAssetChart";
+import MultiAssetChart from "src/components/ui/MultiAssetChart";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -543,18 +543,10 @@ export default function EnhancedTradeProDashboard() {
         <MostBought />
         <ProductsAndTools />
         <TopGainers />
-        <MultiAssetSection />
+        <MultiAssetChart />
         <TopByMarketCap />
       </main>
     </div>
   );
 }
 
-const MultiAssetSection = () => (
-  <motion.div {...fadeInUp} className="my-8">
-    <h2 className="text-xl font-semibold text-white mb-4">Multi-Asset Comparison</h2>
-    <div className="bg-gray-800 p-4 rounded-lg">
-      <MultiAssetChart />
-    </div>
-  </motion.div>
-);
