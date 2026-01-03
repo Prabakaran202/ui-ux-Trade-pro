@@ -1,7 +1,5 @@
 "use client";
-import {
-  LineChart, Line, XAxis, YAxis, Tooltip, Legend
-} from "recharts";
+
 import MultiAssetChart from "src/components/ui/MultiAssetChart";
 
 import { motion, AnimatePresence } from "framer-motion";
