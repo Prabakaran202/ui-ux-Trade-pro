@@ -1,10 +1,10 @@
-
+"use client";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, Legend
 } from "recharts";
 import { useState, useEffect } from "react";
 
-"use client";
+
 
 const generateData = () => {
   return Array.from({ length: 10 }, (_, i) => ({
