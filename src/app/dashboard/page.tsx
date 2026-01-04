@@ -618,15 +618,13 @@ export default function EnhancedTradeProDashboard() {
       <Header />
       <main className="container mx-auto px-4">
         <TabSection />
-        <MarketIndices />
-        <MostBought />
-        <ProductsAndTools />
-        <TopGainers />
-        <MultiAssetChart />
-        <TopByMarketCap />
-        <MarketIndices/>
-        <TopByMarketCap/>
-        <CandlePatternDisplay />
+    <MarketIndices />
+    <MostBought />
+    <ProductsAndTools />
+    <TopGainers />
+    <MultiAssetChart />
+    <TopByMarketCap />
+    <CandlePatternDisplay />
       </main>
     </div>
   );
