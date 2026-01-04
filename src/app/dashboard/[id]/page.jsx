@@ -543,13 +543,3 @@ export default function GrowwNIFTY50Page({ params }) {
     </div>
   );
 }
-<PieChart width={300} height={300}>
-  <Pie
-    data={portfolio}
-    dataKey="quantity"
-    nameKey="symbol"
-    outerRadius={100}
-    fill="#8884d8"
-    label
-  />
-</PieChart>
