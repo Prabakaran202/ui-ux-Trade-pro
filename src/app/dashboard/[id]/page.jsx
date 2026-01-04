@@ -179,21 +179,22 @@ const StockChart = ({ stock }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newData = generateRandomData(
-        currentValue,
-        getDataPoints(timeRange)
-      );
-      setData((prevData) => [...prevData, ...newData.slice(1)]);
-      setCurrentValue(newData[newData.length - 1][3]);
-      console.log(newData);
-      const initialValue = data[1][2];
-      const changeValue = currentValue - initialValue;
-      const changePercentage = (changeValue / initialValue) * 100;
-      setChange({ value: changeValue, percentage: changePercentage });
+      setData((prevData) => {
+        const newData = generateRandomData(
+          prevData[prevData.length - 1][3],
+          getDataPoints(timeRange)
+        );
+        setCurrentValue(newData[newData.length - 1][3]);
+        const initialValue = prevData[1][2];
+        const changeValue = newData[newData.length - 1][3] - initialValue;
+        const changePercentage = (changeValue / initialValue) * 100;
+        setChange({ value: changeValue, percentage: changePercentage });
+        return [...prevData, ...newData.slice(1)];
+      });
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [timeRange, currentValue, data]);
+  }, [timeRange]);
 
   const getDataPoints = (range) => {
     switch (range) {
@@ -542,3 +543,13 @@ export default function GrowwNIFTY50Page({ params }) {
     </div>
   );
 }
+<PieChart width={300} height={300}>
+  <Pie
+    data={portfolio}
+    dataKey="quantity"
+    nameKey="symbol"
+    outerRadius={100}
+    fill="#8884d8"
+    label
+  />
+</PieChart>

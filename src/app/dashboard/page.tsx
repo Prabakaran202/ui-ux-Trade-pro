@@ -2,6 +2,7 @@
 
 import MultiAssetChart from "src/components/ui/MultiAssetChart";
 
+import { generatePrices } from "@/lib/market";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
@@ -531,6 +532,86 @@ const TopByMarketCap = () => {
   );
 };
 
+/* ---------- STEP 1: Candle data generator ---------- */
+const generateCandleData = () => {
+  return Array.from({ length: 20 }, (_, i) => {
+    const open = Math.random() * 100 + 100;
+    const close = open + (Math.random() * 20 - 10);
+    const high = Math.max(open, close) + Math.random() * 10;
+    const low = Math.min(open, close) - Math.random() * 10;
+
+    return {
+      time: `T${i}`,
+      open,
+      close,
+      high,
+      low,
+    };
+  });
+};
+
+/* ---------- STEP 2: Pattern logic ---------- */
+const isDoji = (c: any) =>
+  Math.abs(c.open - c.close) < (c.high - c.low) * 0.1;
+
+const isHammer = (c: any) => {
+  const body = Math.abs(c.open - c.close);
+  const lowerWick = Math.min(c.open, c.close) - c.low;
+  return lowerWick > body * 2;
+};
+
+const isEngulfing = (prev: any, curr: any) =>
+  curr.open < prev.close && curr.close > prev.open;
+
+const detectPattern = (data: any[], index: number) => {
+  const c = data[index];
+  const prev = data[index - 1];
+
+  if (isDoji(c)) return "Doji";
+  if (isHammer(c)) return "Hammer";
+  if (prev && isEngulfing(prev, c)) return "Engulfing";
+  return null;
+};
+
+const patternInfo: any = {
+  Doji: "Market indecision",
+  Hammer: "Possible bullish reversal",
+  Engulfing: "Strong trend reversal signal",
+};
+
+/* ---------- COMPONENT ---------- */
+const CandlePatternDisplay = () => {
+  const [data, setData] = useState(generateCandleData());
+
+  /* ---------- STEP 6: Real-time update ---------- */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setData(generateCandleData());
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  /* ---------- STEP 4: Visual labels ---------- */
+  return (
+    <motion.div {...fadeInUp} className="my-8">
+      <h2 className="text-xl font-semibold text-white mb-4">Candlestick Pattern Recognition</h2>
+
+      {data.map((c, i) => {
+        const pattern = detectPattern(data, i);
+        return (
+          pattern && (
+            <div key={i} className="bg-gray-800 p-3 rounded-lg mb-2 text-gray-300">
+              📍 {c.time} – {pattern}  
+              <small>({patternInfo[pattern]})</small>
+            </div>
+          )
+        );
+      })}
+    </motion.div>
+  );
+};
+
 export default function EnhancedTradeProDashboard() {
   return (
     <div className="bg-gray-900 min-h-screen text-gray-300">
@@ -543,8 +624,10 @@ export default function EnhancedTradeProDashboard() {
         <TopGainers />
         <MultiAssetChart />
         <TopByMarketCap />
+        <MarketIndices/>
+        <TopByMarketCap/>
+        <CandlePatternDisplay />
       </main>
     </div>
   );
 }
-
