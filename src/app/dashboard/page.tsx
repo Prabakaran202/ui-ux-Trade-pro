@@ -2,7 +2,7 @@
 
 import MultiAssetChart from "src/components/ui/MultiAssetChart";
 
-import { generatePrices } from "@/lib/market";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
