@@ -602,7 +602,7 @@ const CandlePatternDisplay = () => {
         return (
           pattern && (
             <div key={i} className="bg-gray-800 p-3 rounded-lg mb-2 text-gray-300">
-              📍 {c.time} – {pattern}  
+               {c.time} – {pattern}  
               <small>({patternInfo[pattern]})</small>
             </div>
           )

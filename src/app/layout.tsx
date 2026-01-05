@@ -9,6 +9,9 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+const router = useRouter();
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
