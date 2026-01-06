@@ -13,6 +13,16 @@ pnpm dev
 # or
 bun dev
 ```
+## Tech Stack
+- Next.js
+- TypeScript
+- React
+- CSS
+## Contribution Guidelines
+- Fork the repository
+- Create a new branch for changes
+- Make meaningful updates
+- Submit a pull request with clear description 
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
