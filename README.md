@@ -13,6 +13,11 @@ pnpm dev
 # or
 bun dev
 ```
+## Tech Stack
+- Next.js
+- TypeScript
+- React
+- CSS
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
