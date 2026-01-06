@@ -611,8 +611,125 @@ const CandlePatternDisplay = () => {
     </motion.div>
   );
 };
+//task 6
+
+//task 6
+// 🔹 Random data
+const generatePrices = () =>
+  Array.from({ length: 20 }, (_, i) => ({
+    time: `T${i}`,
+    price: Math.random() * 100 + 100,
+  }));
+
+// 🔹 Moving Average
+const movingAverage = (data:any[], period:number) =>
+  data.map((_, i) =>
+    i < period
+      ? null
+      : data.slice(i - period, i)
+          .reduce((s, d) => s + d.price, 0) / period
+  );
+
+// 🔹 Volatility
+const volatility = (data:any[]) => {
+  const prices = data.map(d => d.price);
+  const mean = prices.reduce((a,b)=>a+b,0)/prices.length;
+  const variance =
+    prices.reduce((s,p)=>s+(p-mean)**2,0)/prices.length;
+  return Math.sqrt(variance);
+};
+
+// 🔹 RSI
+const calculateRSI = (data:any[], period=14) => {
+  let gains = 0, losses = 0;
+  for (let i = data.length - period; i < data.length - 1; i++) {
+    const diff = data[i+1].price - data[i].price;
+    diff >= 0 ? gains += diff : losses -= diff;
+  }
+  const rs = gains / (losses || 1);
+  return 100 - 100 / (1 + rs);
+};
+
 
 export default function EnhancedTradeProDashboard() {
+  const generatePrices = () => {
+    return Array.from({ length: 20 }, (_, i) => ({
+      time: `T${i}`,
+      price: Math.random() * 100 + 100,
+    }));
+  };
+
+  const [prices, setPrices] = useState(generatePrices());
+  const [trades, setTrades] = useState<any[]>([]);
+const calculateMA = (data: any[], period: number) => {
+  return data.map((_, i) => {
+    if (i < period) return null;
+    const slice = data.slice(i - period, i);
+    return (
+      slice.reduce((sum, s) => sum + s.price, 0) / period
+    );
+  });
+};
+const calculateRSI = (data: any[], period = 14) => {
+  let gains = 0;
+  let losses = 0;
+
+  for (let i = data.length - period; i < data.length - 1; i++) {
+    const diff = data[i + 1].price - data[i].price;
+    if (diff >= 0) gains += diff;
+    else losses -= diff;
+  }
+
+  const rs = gains / (losses || 1);
+  return 100 - 100 / (1 + rs);
+};
+const runStrategy = (
+  price: number,
+  ma: number | null,
+  rsi: number
+) => {
+  if (ma && price > ma) return "BUY";
+  if (rsi > 70) return "SELL";
+  return "HOLD";
+};
+// 🔹 STEP-5: TRADE SIMULATION FUNCTION
+  const simulateTrade = (signal: string, price: number) => {
+    if (signal === "BUY" || signal === "SELL") {
+      setTrades((prev) => [...prev, { signal, price }]);
+    }
+  };
+
+  // 🔹 STEP-6: REAL-TIME STRATEGY RUN
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newData = generatePrices();
+      setPrices(newData);
+
+      const ma = calculateMA(newData, 10).slice(-1)[0];
+      const rsi = calculateRSI(newData);
+
+      const latestPrice = newData[newData.length - 1].price;
+      const signal = runStrategy(latestPrice, ma, rsi);
+
+      simulateTrade(signal, latestPrice);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+   // 🔹 Task-6 states
+  const [data, setData] = useState(generatePrices());
+  const [showMA, setShowMA] = useState(true);
+  const [showRSI, setShowRSI] = useState(true);
+  const [showVol, setShowVol] = useState(true);
+
+  // 🔹 Real-time update
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setData(generatePrices());
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="bg-gray-900 min-h-screen text-gray-300">
       <Header />

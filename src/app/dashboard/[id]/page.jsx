@@ -543,3 +543,36 @@ export default function GrowwNIFTY50Page({ params }) {
     </div>
   );
 }
+  return (
+    <div className="bg-gray-900 min-h-screen text-gray-300">
+      <Header />
+
+      <main className="container mx-auto px-4">
+        {/* existing sections */}
+
+        {/* 🔹 TASK-6 Analytics Dashboard */}
+        <div className="bg-gray-800 p-4 rounded mt-8">
+          <h2 className="text-white text-xl mb-3">
+            Advanced Analytics Dashboard
+          </h2>
+
+          <div className="flex gap-4 mb-4">
+            <button onClick={() => setShowMA(!showMA)}>MA</button>
+            <button onClick={() => setShowRSI(!showRSI)}>RSI</button>
+            <button onClick={() => setShowVol(!showVol)}>Volatility</button>
+          </div>
+
+          {showMA && (
+            <p>
+              MA(10): {movingAverage(data,10).slice(-1)[0]?.toFixed(2)}
+            </p>
+          )}
+
+          {showRSI && <p>RSI: {calculateRSI(data).toFixed(2)}</p>}
+
+          {showVol && <p>Volatility: {volatility(data).toFixed(2)}</p>}
+        </div>
+      </main>
+    </div>
+  );
+

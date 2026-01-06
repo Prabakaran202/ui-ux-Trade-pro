@@ -41,10 +41,10 @@ export default function MultiAssetChart() {
         {showBond && <Line dataKey="bond" stroke="#ffc658" />}
       </LineChart>
 
-      <div>
-        <button onClick={() => setShowStock(!showStock)}>Toggle Stock</button>
-        <button onClick={() => setShowCrypto(!showCrypto)}>Toggle Crypto</button>
-        <button onClick={() => setShowBond(!showBond)}>Toggle Bond</button>
+      <div >
+        <button onClick={() => setShowStock(!showStock)}> Stock</button>
+        <button onClick={() => setShowCrypto(!showCrypto)}> Crypto</button>
+        <button onClick={() => setShowBond(!showBond)}> Bond</button>
       </div>
     </>
   );
