@@ -717,19 +717,7 @@ const runStrategy = (
     return () => clearInterval(interval);
   }, []);
 
-   // 🔹 Task-6 states
-  const [data, setData] = useState(generatePrices());
-  const [showMA, setShowMA] = useState(true);
-  const [showRSI, setShowRSI] = useState(true);
-  const [showVol, setShowVol] = useState(true);
-
-  // 🔹 Real-time update
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setData(generatePrices());
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  
   return (
     <div className="bg-gray-900 min-h-screen text-gray-300">
       <Header />
