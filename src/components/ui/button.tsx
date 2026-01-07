@@ -51,6 +51,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     )
   }
 )
+
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+
+<div className="mt-6 bg-gray-800 p-4 rounded">
+  <h3 className="text-white text-lg mb-2">Strategy Trades</h3>
+
+  {trades.map((t, i) => (
+    <div key={i}>
+      {t.signal} @ {t.price.toFixed(2)}
+    </div>
+  ))}
+</div>
+
